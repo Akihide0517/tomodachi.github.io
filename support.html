@@ -1,0 +1,80 @@
+<section id="contact" style="margin-top:28px;">
+  <h2>お問い合わせ</h2>
+  <p>不具合報告、機能リクエストなどはこちらから送れます。</p>
+
+  <form id="contactForm" style="max-width:720px;">
+    <div style="display:grid; gap:12px;">
+      <label>
+        お名前（任意）
+        <input type="text" id="cf_name" placeholder="例：吉田" style="width:100%; padding:10px; border:1px solid #e6e8ee; border-radius:10px;">
+      </label>
+
+      <label>
+        メール（任意）
+        <input type="email" id="cf_email" placeholder="例：example@gmail.com" style="width:100%; padding:10px; border:1px solid #e6e8ee; border-radius:10px;">
+      </label>
+
+      <label>
+        件名（必須）
+        <input type="text" id="cf_subject" required placeholder="例：地図ピンが表示されない" style="width:100%; padding:10px; border:1px solid #e6e8ee; border-radius:10px;">
+      </label>
+
+      <label>
+        内容（必須）
+        <textarea id="cf_body" required rows="6" placeholder="状況、再現手順、端末、iOSバージョンなど" style="width:100%; padding:10px; border:1px solid #e6e8ee; border-radius:10px;"></textarea>
+      </label>
+
+      <button type="submit" style="padding:12px 14px; border:0; border-radius:12px; background:#0a66c2; color:#fff; font-weight:700;">
+        メールで送信
+      </button>
+
+      <small style="color:#666;">
+        ※「メールで送信」を押すとメールアプリが開きます。送信はメール側で確定してください。
+      </small>
+    </div>
+  </form>
+
+  <div style="margin-top:14px; color:#666;">
+    <div>連絡先：</div>
+    <div>開発者名（X.com）：<a href="https://x.com/_damakatu_" target="_blank" rel="noopener">@_damakatu_</a></div>
+    <div>メール：<a href="mailto:akihide.yoshida5@gmail.com">akihide.yoshida5@gmail.com</a></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const TO = "akihide.yoshida5@gmail.com";
+
+  function enc(s) { return encodeURIComponent(s ?? ""); }
+
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("cf_name").value.trim();
+    const email = document.getElementById("cf_email").value.trim();
+    const subject = document.getElementById("cf_subject").value.trim();
+    const body = document.getElementById("cf_body").value.trim();
+
+    if (!subject || !body) {
+      alert("件名と内容は必須です。");
+      return;
+    }
+
+    const lines = [
+      "【お問い合わせ】",
+      "",
+      `お名前：${name || "（未入力）"}`,
+      `メール：${email || "（未入力）"}`,
+      "",
+      "【内容】",
+      body,
+      "",
+      "----",
+      "※このメールはWebフォームから作成されました。"
+    ];
+
+    const mailto = `mailto:${TO}?subject=${enc("[Tomo] " + subject)}&body=${enc(lines.join("\n"))}`;
+    window.location.href = mailto;
+  });
+})();
+</script>
